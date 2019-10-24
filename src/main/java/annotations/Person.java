@@ -14,7 +14,8 @@ public class Person {
   @JsonElement
   private float salary;
 
-  private String address;
+  @JsonElement
+  private Address address;
 
   @JsonElement
   private boolean alive;
@@ -32,7 +33,7 @@ public class Person {
     return name.substring(0, 1).toUpperCase() + name.substring(1);
   }
 
-  public Person(String firstName, String lastName, int age, String address, float salary, boolean alive) {
+  public Person(String firstName, String lastName, int age, Address address, float salary, boolean alive) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.age = age;
@@ -54,7 +55,7 @@ public class Person {
     return this.age;
   }
 
-  public String address() {
+  public Address address() {
     return this.address;
   }
 

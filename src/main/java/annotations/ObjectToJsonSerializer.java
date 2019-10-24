@@ -54,7 +54,13 @@ public class ObjectToJsonSerializer {
           value = "\"" + entry.getValue() + "\"";
         } else {
           if (entry.getValue() != null) {
-            value = entry.getValue().toString();
+            Object v = entry.getValue();
+            Class<?> valueClass = v.getClass();
+            if (valueClass.isAnnotationPresent(JsonSerializable.class)) {
+              value = convertToJson(v);
+            } else {
+              value = entry.getValue().toString();
+            }
           }
         }
 
