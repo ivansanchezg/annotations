@@ -34,7 +34,7 @@ public class ObjectToJsonSerializer {
     return value.isEmpty() ? field.getName() : value;
   }
 
-  private String getJSONKeyAndValue(Map.Entry<String, Object> entry) {
+  private String getJsonKeyAndValue(Map.Entry<String, Object> entry) {
     String key = "\"" + entry.getKey() + "\":";
     String value = null;
     if (entry.getValue() != null) {
@@ -66,7 +66,7 @@ public class ObjectToJsonSerializer {
     String jsonString = jsonElementsMap
       .entrySet()
       .stream()
-      .map((entry) -> getJSONKeyAndValue(entry))
+      .map((entry) -> getJsonKeyAndValue(entry))
       .collect(Collectors.joining(","));
 
     return "{" + jsonString + "}";
