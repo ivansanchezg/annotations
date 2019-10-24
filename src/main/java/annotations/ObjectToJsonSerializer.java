@@ -36,18 +36,30 @@ public class ObjectToJsonSerializer {
 
   private String getJsonString(Object object) throws Exception {
     Class<?> c = object.getClass();
-    Map<String, String> jsonElementsMap = new HashMap<>();
+    Map<String, Object> jsonElementsMap = new HashMap<>();
     for (Field field : c.getDeclaredFields()) {
       field.setAccessible(true);
       if (field.isAnnotationPresent(JsonElement.class)) {
-        jsonElementsMap.put(getKey(field), (String) field.get(object));
+        jsonElementsMap.put(getKey(field), field.get(object));
       }
     }
 
     String jsonString = jsonElementsMap
       .entrySet()
       .stream()
-      .map(entry -> "\"" + entry.getKey() + "\":\"" + entry.getValue() + "\"")
+      .map((entry) -> {
+        String key = "\"" + entry.getKey() + "\":";
+        String value = null;
+        if (entry.getValue() instanceof String) {
+          value = "\"" + entry.getValue() + "\"";
+        } else {
+          if (entry.getValue() != null) {
+            value = entry.getValue().toString();
+          }
+        }
+
+        return key + value;
+      })
       .collect(Collectors.joining(","));
 
     return "{" + jsonString + "}";

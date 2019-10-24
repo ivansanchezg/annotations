@@ -9,7 +9,7 @@ public class App {
   }
 
   public static void main(String[] args) {
-    Person person = new Person("ivan", "sanchez", "29", "Cerezo H8 Zapopan Jalisco");
+    Person person = new Person("ivan", "sanchez", 29, "Cerezo H8 Zapopan Jalisco", 1234.56f, true);
     ObjectToJsonSerializer serializer = new ObjectToJsonSerializer();
     String personJson = serializer.convertToJson(person);
     System.out.println(personJson);

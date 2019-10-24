@@ -9,9 +9,18 @@ public class Person {
   private String lastName;
 
   @JsonElement(key = "yearsOld")
-  private String age;
+  private int age;
+
+  @JsonElement
+  private float salary;
 
   private String address;
+
+  @JsonElement
+  private boolean alive;
+
+  @JsonElement
+  private String nullField;
 
   @JsonSerializationInit
   private void upperCaseNames() {
@@ -23,13 +32,16 @@ public class Person {
     return name.substring(0, 1).toUpperCase() + name.substring(1);
   }
 
-  public Person(String firstName, String lastName, String age, String address) {
+  public Person(String firstName, String lastName, int age, String address, float salary, boolean alive) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.age = age;
     this.address = address;
+    this.salary = salary;
+    this.alive = alive;
   }
 
+  // Getters
   public String firstName() {
     return this.firstName;
   }
@@ -38,11 +50,19 @@ public class Person {
     return this.lastName;
   }
 
-  public String age() {
+  public int age() {
     return this.age;
   }
 
   public String address() {
     return this.address;
+  }
+
+  public float salary() {
+    return this.salary;
+  }
+
+  public boolean isAlive() {
+    return this.alive;
   }
 }
