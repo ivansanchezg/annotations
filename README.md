@@ -7,3 +7,17 @@ The following concepts are demostrated in this repo:
 - Creation of custom annotations
 - Validating an entity has an annotation
 - Execution of code based on an annotation
+
+## How to run
+
+This project uses [gradle](https://gradle.org/)
+
+```
+$ gradle clean run
+```
+
+## How to execute tests
+
+```
+$ gradle run test
+```
