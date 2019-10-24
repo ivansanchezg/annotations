@@ -7,8 +7,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class AppTest {
-    @Test public void testAppHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull("app should have a greeting", classUnderTest.getGreeting());
+    @Test public void testConversionToJson() {
+      Address address = new Address("Cool Street 123", "12345", "MyCity", "MyState", "MyCountry");
+      Person person = new Person("ivan", "sanchez", 29, address, 1234.56f, true);
+      ObjectToJsonSerializer serializer = new ObjectToJsonSerializer();
+      String personJson = serializer.convertToJson(person);
+      String expectedResult = "{\"firstName\":\"Ivan\",\"lastName\":\"Sanchez\",\"address\":{\"zipCode\":\"12345\",\"country\":\"MyCountry\",\"city\":\"MyCity\",\"state\":\"MyState\",\"line2\":null,\"line1\":\"Cool Street 123\"},\"yearsOld\":29,\"alive\":true,\"nullField\":null,\"salary\":1234.56}";
+      assertEquals(personJson, expectedResult);
     }
 }

@@ -4,10 +4,6 @@
 package annotations;
 
 public class App {
-  public String getGreeting() {
-    return "Hello world.";
-  }
-
   public static void main(String[] args) {
     Address address = new Address("Cool Street 123", "12345", "MyCity", "MyState", "MyCountry");
     Person person = new Person("ivan", "sanchez", 29, address, 1234.56f, true);
