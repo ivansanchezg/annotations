@@ -34,6 +34,25 @@ public class ObjectToJsonSerializer {
     return value.isEmpty() ? field.getName() : value;
   }
 
+  private String getJSONKeyAndValue(Map.Entry<String, Object> entry) {
+    String key = "\"" + entry.getKey() + "\":";
+    String value = null;
+    if (entry.getValue() != null) {
+      if (entry.getValue() instanceof String) {
+        value = "\"" + entry.getValue() + "\"";
+      } else {
+        Object entryValue = entry.getValue();
+        Class<?> valueClass = entryValue.getClass();
+        if (valueClass.isAnnotationPresent(JsonSerializable.class)) {
+          value = convertToJson(entryValue);
+        } else {
+          value = entry.getValue().toString();
+        }
+      }
+    }
+    return key + value;
+  }
+
   private String getJsonString(Object object) throws Exception {
     Class<?> c = object.getClass();
     Map<String, Object> jsonElementsMap = new HashMap<>();
@@ -47,25 +66,7 @@ public class ObjectToJsonSerializer {
     String jsonString = jsonElementsMap
       .entrySet()
       .stream()
-      .map((entry) -> {
-        String key = "\"" + entry.getKey() + "\":";
-        String value = null;
-        if (entry.getValue() instanceof String) {
-          value = "\"" + entry.getValue() + "\"";
-        } else {
-          if (entry.getValue() != null) {
-            Object v = entry.getValue();
-            Class<?> valueClass = v.getClass();
-            if (valueClass.isAnnotationPresent(JsonSerializable.class)) {
-              value = convertToJson(v);
-            } else {
-              value = entry.getValue().toString();
-            }
-          }
-        }
-
-        return key + value;
-      })
+      .map((entry) -> getJSONKeyAndValue(entry))
       .collect(Collectors.joining(","));
 
     return "{" + jsonString + "}";
